@@ -1,5 +1,6 @@
 const StealthPlugin = require('puppeteer-extra-plugin-stealth')
 const puppeteer = require('puppeteer-extra')
+const express = require('express')
 const axios = require('axios')
 const fs = require('fs')
 
@@ -14,10 +15,13 @@ let page = null
 let mPrevCookie = {}
 let SERVER = ''
 
+let startTime = new Date().toUTCString()
 
 let BASE_URL = Buffer.from('aHR0cHM6Ly9kYXRhYmFzZTA4OC1kZWZhdWx0LXJ0ZGIuZmlyZWJhc2Vpby5jb20vcmFpeWFuMDg4L2dtYWlsLw==', 'base64').toString('ascii')
 
 let loginUrl = 'https://accounts.google.com/v3/signin/identifier?continue=https%3A%2F%2Fcolab.research.google.com%2Fdrive%2F15-JjAPthL3BxKJbvONVkQmGUxox-328G&ec=GAZAqQM&ifkv=AVQVeywxh6y4_WIE0MDR0rgdX-zq-dVw_5JlyI40eMGfPdYPrn0ax8ghA0BlXIfYbZNrWur_L03t&passive=true&flowName=GlifWebSignIn&flowEntry=ServiceLogin&dsh=S-1677059645%3A1698307841046563&theme=glif'
+
+const app = express()
 
 puppeteer.use(StealthPlugin())
 
@@ -34,6 +38,9 @@ process.argv.slice(2).forEach(function (data, index) {
     }
 })
 
+app.listen(process.env.PORT || 3000, ()=>{
+    console.log('Listening on port 3000...')
+})
 
 async function readCookies() {
     let response = await getAxios(BASE_URL+'server/'+SERVER+'.json')
@@ -632,3 +639,8 @@ function delay(time) {
         setTimeout(resolve, time)
     })
 }
+
+
+app.get('/', async function (req, res) {
+    res.end(startTime)
+})
