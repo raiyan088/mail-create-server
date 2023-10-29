@@ -56,6 +56,8 @@ async function startBrowser(data) {
     try {
         mStart = new Date().getTime()+3600000
 
+        console.log('Start:', mStart)
+
         browser = await puppeteer.launch({
             //executablePath: 'C:\\Users\\Hp 11 GENERATION\\AppData\\Local\\Google\\Chrome\\Application\\chrome.exe',
             //headless: false,
