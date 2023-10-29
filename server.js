@@ -122,6 +122,7 @@ async function startBrowser(data) {
         
         await waitForSelector('colab-connect-button')
 
+        
         console.log('Load Success')
 
         let hasConnected = await checkConnected()
