@@ -36,20 +36,8 @@ async function startBrowser() {
     try {
         let browser = await puppeteer.launch({
             headless: true,
-            //headless: 'new',
-            args: [
-                '--no-sandbox',
-                '--disable-setuid-sandbox',
-                '--ignore-certificate-errors',
-                '--ignore-certificate-errors-skip-list',
-                '--disable-dev-shm-usage'
-            ]
+            args: ['--no-sandbox', '--disable-setuid-sandbox']
         })
-    
-        let page = (await browser.pages())[0]
-    
-        page.on('dialog', async dialog => dialog.type() == "beforeunload" && dialog.accept())
-        
         console.log('Browser Start')
     } catch (error) {
         console.log(error)
